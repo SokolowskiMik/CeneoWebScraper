@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}extract{% endblock %}
+
+{% block content %}
+<div class="col-4 pt-2">
+    <form method="POST">
+        <label for="product-id" class="form-label"> Wpisz id produktu </label>
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" id="product-id" placeholder="type in product id" aria-describedby="submit-button">
+            <input class="btn btn-outline-secondary" id="submit-button" type="submit" value="Submit">
+        </div>
+    </form>
+</div>
+{% endblock %}

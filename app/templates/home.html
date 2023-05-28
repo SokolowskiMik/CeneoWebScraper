@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div class="col-7 pt-2">
+    <h2 class="text-center"> Opis projektu </h2>
+    <h3 class="text-start"> Cel aplikacji: </h3>
+    <p class="text-start"> Celem działania aplikacji jest pobieranie opinii o produktach z serwisu Ceneo.pl. Dla 
+        produktu, którego kod zostanie podany jako parametr należy pobrać jego nazwę oraz 
+        wszystkie dostępne opinie o nim </p>
+    <h3 class="text-start"> Opis aplikacji: </h3>
+    <p class="text-start"> Aplikacja pobiera wpisany numer identyfikacyjny produktu i pobiera dla niego wszystkie dane ktore nastepnie sa umieszczane na stronie </p>
+    <h3 class="text-start"> Zastosowane biblioteki: </h3>
+    <ul class="list-group">
+        <li class="list-group-item">Requests</li>
+        <li class="list-group-item">BeautifulSoup4</li>
+        <li class="list-group-item">Json</li>
+        <li class="list-group-item">Os</li>
+        <li class="list-group-item">Pandas</li>
+        <li class="list-group-item">Flask</li>
+        <li class="list-group-item">jquery</li>
+        <li class="list-group-item">jinja2</li>
+      </ul>
+    <h3 class="text-start"> Zastosowane podejscia: </h3>
+    <p class="text-start"> aplikacja zostala stworzona... </p>
+</div>
+{% endblock %}
