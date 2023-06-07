@@ -16,7 +16,7 @@
     <script defer src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
     <script defer src="{{ url_for('static', filename='script.js')}}"></script>
     
-    <title>{% block title %}base{% endblock %}</title>
+    <title>CeneoWebScraper</title>
 </head>
 
 <body class="d-flex flex-column min-vh-100 bg-gray-100 text-center text-black">
@@ -29,28 +29,28 @@
           <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="/"> <i class="bi bi-house-fill"></i> Strona główna </a>
+                <a class="nav-link active" aria-current="page" href="{{url_for('index')}}"> <i class="bi bi-house-fill"></i> Strona główna </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="/extract"> <i class="bi bi-arrow-bar-up"></i> Ekstrakcja opinii </a>
+                <a class="nav-link" href="{{url_for('extract')}}"> <i class="bi bi-arrow-bar-up"></i> Ekstrakcja opinii </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="/products"> <i class="bi bi-list-stars"></i> Lista produktów </a>
+                <a class="nav-link" href="{{url_for('products')}}"> <i class="bi bi-list-stars"></i> Lista produktów </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="/author"> <i class="bi bi-person"></i> O autorze </a>
+                <a class="nav-link" href="{{url_for('author')}}"> <i class="bi bi-person"></i> O autorze </a>
               </li>
           </div>
           </ul>
           <ul class="navbar-nav d-flex">
             <li class="nav-item">
-              <a class="nav-link" href="/sign-up"> sign up </a>
+              <a class="nav-link" href="#"> logut </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/login"> login </a>
+              <a class="nav-link" href="{{url_for('login')}}"> login </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/logout"> logut </a>
+              <a class="nav-link" href="{{url_for('sign_up')}}"> sign up </a>
             </li>
           </ul>
         </div>

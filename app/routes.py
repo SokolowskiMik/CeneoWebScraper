@@ -1,4 +1,6 @@
-from app import app, render_template, request, flash
+from app import app
+from flask import render_template, request, flash
+
 
 @app.route('/')
 @app.route('/index')
@@ -49,8 +51,3 @@ def sign_up():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     return render_template("login.html")
-
-@app.route('/name/', defaults={'name': "Anonim"})
-@app.route('/name/<name>')
-def name(name=None):
-    return f"Hello, {name}!"

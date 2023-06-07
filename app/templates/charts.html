@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}charts{% endblock %}
+<!-- {% block title %}charts{% endblock %} -->
 
 {% block content %}
 <div class="col-9 pt-2">
@@ -12,6 +12,6 @@
     <img src="..." class="rounded float-center" alt="wykres kolumnowy">
 </div>
 <div class="col-9">
-    <form method="POST"><a href="/product"><button type="button" class="btn btn-dark"> Wróć </button></a>
+    <form method="POST"><a href="{{url_for('product')}}"><button type="button" class="btn btn-dark"> Wróć </button></a>
 </div>
 {% endblock %}

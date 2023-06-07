@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, flash
+from flask import Flask
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'kebabop babob'
