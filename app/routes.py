@@ -3,7 +3,7 @@ from app import app, render_template, request, flash
 @app.route('/')
 @app.route('/index')
 def index():
-    return render_template("home.html")
+    return render_template("index.html")
 
 @app.route('/extract', methods=['GET', 'POST'])
 def extract():
@@ -38,7 +38,7 @@ def sign_up():
         elif len(firstName) < 2:
             flash('First name must be greater than 1 character.', category='error')
         elif len(password1) < 7:
-            flash('password must be at least 7 characters.')
+            flash('password must be at least 7 characters.', category='error')
         elif password1 != password2:
             flash("Passwords don't match.", category='error')
         else:
