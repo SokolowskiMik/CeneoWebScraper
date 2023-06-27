@@ -1,17 +1,67 @@
-<!-- uzyj mock data i do sortowania i filtrowania danych w tabelcedatatables jquery-->
-
 {% extends "base.html" %}
 
-<!-- {% block title %}Opinie o produkcie{% endblock %} -->
 
 {% block content %}
 <h3>{{product_code}}</h3>
 <div class="container pt-5">
-    <form action="POST" method="POST">
-      <a href="#" download="file1"><button type="button" class="btn btn-primary"> pobierz .csv </button></a><a href="#" download="file1"><button type="button" class="btn btn-primary"> pobierz .xlsx </button></a><a href="#" download="file1"><button type="button" class="btn btn-primary"> pobierz .json </button></a>
-      <a href="/charts"><button type="button" class="btn btn-info"> wykresy </button></a>
-      <a href="/products"><button type="button" class="btn btn-dark"> Wróć </button></a>
-    </form>
+    
+    <div class="btn-group">
+        <a href="{{url_for('static', filename='./opinions/'+product_code+'.csv')}}" download="{{product_code.csv}}" class="text-decoration-none"><button type="button" class="btn btn-outline-secondary">csv
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
+<path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+<path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
+</svg>
+          <span class="visually-hidden">csv</span>
+        </button></a>
+        <a href="{{url_for('static', filename='./opinions/'+product_code+'.xlsx')}}" download="{{product_code.xlsx}}" class="text-decoration-none"><button type="button" class="btn btn-outline-secondary">xlsx
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
+<path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+<path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
+</svg>
+          <span class="visually-hidden">xlsx</span>
+        </button></a>
+        <a href="{{url_for('static', filename='./opinions/'+product_code+'.json')}}" download="{{product_code.json}}"  class="text-decoration-none"><button type="button" class="btn btn-outline-secondary">json
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
+<path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+<path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
+</svg>
+          <span class="visually-hidden">json</span>
+        </button></a>
+    </div>
+
+    <!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+    Wykresy
+  </button>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="staticBackdropLabel">Wykresy</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <h2 class="fs-5">Wykres kołowy</h2>
+            <img 
+            src="{{ url_for('static', filename='./plots/'+product_code+'_recommendation.png')}}" alt="wykres kołowy"
+            />
+
+            <h2 class="fs-5">Wykres kolumnowy</h2>
+            <img 
+            src="{{ url_for('static', filename='./plots/'+product_code+'_score.png')}}" alt="wykres kolumnowy"
+            />
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <a href="{{url_for('products')}}"><button type="button" class="btn btn-dark"> Wróć </button></a>
+    
     <h3 class="text-center"> Pobrane opinie: </h3>
     <table id="example" class="table table-striped pt-1" style="width:100%">
       <thead>
@@ -232,3 +282,12 @@
 
 </div>
 {% endblock %}
+
+<script>
+    const myModal = document.getElementById('myModal')
+    const myInput = document.getElementById('myInput')
+
+    myModal.addEventListener('shown.bs.modal', () => {
+    myInput.focus()
+    })
+</script>
