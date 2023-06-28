@@ -2,7 +2,6 @@ from app import app
 from flask import render_template, request, redirect, url_for, flash
 from app.utils import get_element, selectors
 import requests
-import csv
 import json
 import os
 import pandas as pd
