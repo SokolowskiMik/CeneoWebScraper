@@ -1,20 +1,24 @@
-[
-    {
-        "opinion_id": "17602842",
-        "author": "m...8",
-        "recommendation": "Polecam",
-        "score": "5/5",
-        "purchased": "Transakcja pochodzi z Marketplace Ceneo (usługi Kup Teraz).",
-        "published_at": "2023-06-12 18:55:23",
-        "purchased_at": "2023-05-28 11:29:33",
-        "thumbs_up": "0",
-        "thuhmbs_down": "0",
-        "content": "Swietny",
-        "pros": [
-            "jakość",
-            "trwałość",
-            "wygoda"
-        ],
-        "cons": []
+{
+    "opinions_count": 1,
+    "pros_count": 1,
+    "cons_count": 1,
+    "avg_score": 5.0,
+    "score": {
+        "0.0": 0,
+        "0.5": 0,
+        "1.0": 0,
+        "1.5": 0,
+        "2.0": 0,
+        "2.5": 0,
+        "3.0": 0,
+        "3.5": 0,
+        "4.0": 0,
+        "4.5": 0,
+        "5.0": 1
+    },
+    "recommendation": {
+        "Nie polecam": null,
+        "Polecam": 1.0,
+        "null": null
     }
-]
+}

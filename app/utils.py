@@ -19,7 +19,7 @@ selectors = {
     "published_at": ["span.user-post__published > time:nth-child(1)","datetime"],
     "purchased_at": ["span.user-post__published > time:nth-child(2)","datetime"],
     "thumbs_up": ["button.vote-yes > span"],
-    "thuhmbs_down": ["button.vote-no > span"],
+    "thumbs_down": ["button.vote-no > span"],
     "content": ["div.user-post__text"],
     "pros": ["div.review-feature__col:has(> div.review-feature__title--positives) > div.review-feature__item", None, True],
     "cons": ["div.review-feature__col:has(> div.review-feature__title--negatives) > div.review-feature__item", None, True]

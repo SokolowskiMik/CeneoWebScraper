@@ -1,9 +1,20 @@
 {% extends "base.html" %}
 
+<!-- <script type = "text/javascript">
+    window.onload = function() {
+        const submitForm = document.getElementById("submitForm")
+        submitForm.onsubmit = function(event) {
+            event.preventDefault();
+            fetch("/extract", {
+                method: "GET"
+            } )
+        }
+    }
+</script> -->
 
 {% block content %}
 <div class="col-4 pt-2">
-    <form method="POST" action="{{url_for('extract')}}">
+    <form id="submitForm" method="POST" action="{{url_for('extract')}}">
         <label for="product-id" class="form-label"> Wpisz id produktu </label>
         <div class="input-group mb-3">
             <input type="text" class="form-control" id="product_id" name="product_id" placeholder="type in product id" aria-describedby="submit-button">

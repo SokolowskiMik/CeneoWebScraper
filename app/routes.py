@@ -1,8 +1,12 @@
 from app import app
 from flask import render_template, request, redirect, url_for, flash
 from app.utils import get_element, selectors
+from .models import Product, Opinion
+from . import db
 import requests
+import time
 import json
+import simplejson
 import os
 import pandas as pd
 import numpy as np
@@ -10,7 +14,6 @@ from matplotlib import pyplot as plt
 from bs4 import BeautifulSoup
 
 
-# na 5.0 modele obiektowe zrobic nie trzeba logowania uzytkownikow i kont do 23 czerwca zglosic chec zaliczenia na konsultacjach
 @app.route('/')
 @app.route('/index')
 def index():
@@ -22,10 +25,13 @@ def extract():
     if request.method == 'POST':
         #wtforms biblioteka do obiektowej walidacji itp
         product_code  = request.form['product_id']
-        if 1 != 1:
+        if len(product_code) < 4 or not product_code.isdigit():
             flash('Błędne id produktu', category='error')
-
+            time.sleep(2)
+            return redirect(url_for("extract"))
         else:
+            
+
             all_opinions = []
             url = f"https://www.ceneo.pl/{product_code}#tab=reviews"
             while(url):
@@ -37,10 +43,14 @@ def extract():
                     for key, value in selectors.items():
                         single_opinion[key] = get_element(opinion, *value)
                     all_opinions.append(single_opinion)
+                    # new_opinion = Opinion(opinion_id=single_opinion["opinion_id"], author=single_opinion["author"], recommendation=single_opinion["recommendation"], score=single_opinion["score"], purchased=single_opinion["purchased"], published_at=single_opinion["published_at"], purchased_at=single_opinion["purchased_at"], thumbs_up=single_opinion["thumbs_up"], thumbs_down=single_opinion["thumbs_down"], content=single_opinion["content"], pros=single_opinion["pros"], cons=single_opinion["cons"])
+                    # db.session.add(new_opinion)
+                    # db.session.commit()
                 try:
                     url = f"https://www.ceneo.pl" + get_element(page, "a.pagination__next", "href")
                 except TypeError: 
                     url =  None
+            print(all_opinions)
             #json
             try:
                 os.mkdir("./app/static/opinions")
@@ -101,18 +111,28 @@ def extract():
                 os.mkdir("./app/static/stats")
             except FileExistsError:
                 pass
-            with open(f"./app/static/stats/{product_code}.json", 'w', encoding = "UTF-8") as jf:
-                json.dump(all_opinions, jf, indent=4, ensure_ascii=False)
+            with open(f"./app/static/stats/{product_code}.json", 'w', encoding = "UTF-8") as jsf:
+                simplejson.dump(stats, jsf, indent=4, ensure_ascii=False, ignore_nan=True)
+
+            new_product = Product(product_code=product_code, pros=stats["pros_count"], cons=stats["cons_count"], mean_score=stats["avg_score"])
+            db.session.add(new_product)
+            db.session.commit()
 
             return redirect(url_for('product', product_code=product_code))
     return render_template("extract.html")
 
 @app.route('/products', methods=['GET', 'POST'])
 def products():
-    # lista kodow produktow o ktorych sa pobrane opinie
-    # pobranie z pliku json ze statystykami danych do listy slownikow
-    # przekazac liste slownikow do szablonu html
-    return render_template("products.html")
+    products = Product.query.order_by(Product.date_created).all()
+    print(products)
+    product_code = products[0]
+    files = os.listdir('app/static/stats')
+    product_opinion_list = []
+    for f in files:
+        with open(f"app/static/stats/{f}", 'r', encoding='utf-8') as jsf:
+            js = json.load(jsf)
+        product_opinion_list.append((f.split('.')[0],js))
+    return render_template("products.html", p_o_list = product_opinion_list)
 
 @app.route('/author')
 def author():
@@ -120,7 +140,9 @@ def author():
 
 @app.route('/product/<product_code>', methods=['GET', 'POST'])
 def product(product_code):
-
+    with open(f"app/static/opinions/{product_code}.json", 'r', encoding='utf-8') as jsf:
+        js = json.load(jsf)
+    
     # pobranie z plikow json opini o produkcie i statystyki do dataframe albo listy slownikow
     # przekazanie opinii i statystyk do szablonu html
-    return render_template("product.html", product_code=str(product_code))
+    return render_template("product.html", product_code=str(product_code), opinions_list=js)

@@ -3,72 +3,58 @@
 {% block content %}
 <div class="col pt-2">
   <h2>Lista produktow</h2>
-
-  <ul class="list-group list-group-horizontal">
-    <li class="list-group-item flex-fill">id opinii</li>
-    <li class="list-group-item flex-fill">Liczba opinii</li>
-    <li class="list-group-item flex-fill">Liczba wad</li>
-    <li class="list-group-item flex-fill">Liczba zalet</li>
-    <li class="list-group-item flex-fill">Średnia ocen</li>
-    <li class="list-group-item flex-fill">Pobierz csv, xlsx lub json</li>
+  {{products}}
+  <ul class="list-group list-group-horizontal-lg">
+    <li class="list-group-item flex-fill d-flex">id opinii</li>
+    <li class="list-group-item flex-fill d-flex">Liczba opinii</li>
+    <li class="list-group-item flex-fill d-flex">Liczba wad</li>
+    <li class="list-group-item flex-fill d-flex">Liczba zalet</li>
+    <li class="list-group-item flex-fill d-flex">Średnia ocen</li>
+    <li class="list-group-item flex-fill d-flex">Pobierz csv, xlsx lub json</li>
   </ul>
-  <ul class="list-group list-group-horizontal">
-    <li class="list-group-item flex-fill d-flex justify-content-between align-items-center">
-      <a class="link-secondary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" href="/product">produkt1</a>
+  {% for product_code, list in p_o_list %}
+  <ul class="list-group list-group-horizontal-lg">
+    <li class="list-group-item flex-fill">
+      <a class="link-secondary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" href="/product/{{product_code}}">{{product_code}}</a>
     </li>
-    <li class="list-group-item flex-fill d-flex justify-content-between align-items-center">
-      <span class="badge bg-primary rounded-pill">14</span>
+    <li class="list-group-item flex-fill">
+      <span class="badge bg-primary rounded-pill">{{list["opinions_count"]}}</span>
     </li>
-    <li class="list-group-item flex-fill d-flex justify-content-between align-items-center">
-      <span class="badge bg-primary rounded-pill">2</span>
+    <li class="list-group-item flex-fill">
+      <span class="badge bg-primary rounded-pill">{{list["pros_count"]}}</span>
     </li>
-    <li class="list-group-item flex-fill d-flex justify-content-between align-items-center">
-      <span class="badge bg-primary rounded-pill">1</span>
+    <li class="list-group-item flex-fill">
+      <span class="badge bg-primary rounded-pill">{{list["cons_count"]}}</span>
     </li>
-    <li class="list-group-item flex-fill d-flex justify-content-between align-items-center">
-      <span class="badge bg-primary rounded-pill">1</span>
+    <li class="list-group-item flex-fill">
+      <span class="badge bg-primary rounded-pill">{{list["avg_score"]}}</span>
     </li>
-    <li class="list-group-item flex-fill d-flex justify-content-between align-items-center">
+    <li class="list-group-item flex-fill">
       <div class="btn-group">
-        <a href="#" download="file1" class="text-decoration-none"><button type="button" class="btn btn-outline-secondary">csv
+        <a href="{{url_for('static', filename='./opinions/'+product_code+'.csv')}}" download="{{product_code.csv}}" class="text-decoration-none"><button type="button" class="btn btn-outline-secondary">csv
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
 <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
 <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
 </svg>
           <span class="visually-hidden">csv</span>
         </button></a>
-        <a href="#" download="file1" class="text-decoration-none"><button type="button" class="btn btn-outline-secondary">xlsx
+        <a href="{{url_for('static', filename='./opinions/'+product_code+'.xlsx')}}" download="{{product_code.xlsx}}" class="text-decoration-none"><button type="button" class="btn btn-outline-secondary">xlsx
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
 <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
 <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
 </svg>
           <span class="visually-hidden">xlsx</span>
         </button></a>
-        <a href="#" download="file1" class="text-decoration-none"><button type="button" class="btn btn-outline-secondary">json
+        <a href="{{url_for('static', filename='./opinions/'+product_code+'.json')}}" download="{{product_code.json}}"  class="text-decoration-none"><button type="button" class="btn btn-outline-secondary">json
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
 <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
 <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
 </svg>
           <span class="visually-hidden">json</span>
         </button></a>
-      </div>
+    </div>
     </li>
   </ul>
-  <!-- <ul class="list-group list-group-horizontal">
-    <li class="list-group-item flex-fill">id opinii</li>
-    <li class="list-group-item flex-fill">Liczba opinii</li>
-    <li class="list-group-item flex-fill">Liczba wad</li>
-    <li class="list-group-item flex-fill">Liczba zalet</li>
-    <li class="list-group-item flex-fill">Średnia ocen</li>
-    <li class="list-group-item flex-fill">Pobierz csv, xlsx lub json</li>
-  </ul>
-  <ul class="list-group list-group-horizontal">
-    <li class="list-group-item flex-fill"><a class="link-secondary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" href="/product">produkt1</a></li>
-    <li class="list-group-item flex-fill">...</li>
-    <li class="list-group-item flex-fill">...</li>
-    <li class="list-group-item flex-fill">...</li>
-    <li class="list-group-item flex-fill">...</li>
-    <li class="list-group-item flex-fill"><form method="POST"><a href="#" download="file1"><button type="button" class="btn btn-dark"> pobierz .csv </button></a><a href="#" download="file1"><button type="button" class="btn btn-dark"> pobierz .json </button></a><a href="#" download="file1"><button type="button" class="btn btn-dark"> pobierz .csv </button></a></li>
-  </ul> -->
+  {% endfor %}
 </div>
 {% endblock %}
