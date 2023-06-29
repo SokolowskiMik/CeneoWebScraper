@@ -1,17 +1,5 @@
 {% extends "base.html" %}
 
-<!-- <script type = "text/javascript">
-    window.onload = function() {
-        const submitForm = document.getElementById("submitForm")
-        submitForm.onsubmit = function(event) {
-            event.preventDefault();
-            fetch("/extract", {
-                method: "GET"
-            } )
-        }
-    }
-</script> -->
-
 {% block content %}
 <div class="col-4 pt-2">
     <form id="submitForm" method="POST" action="{{url_for('extract')}}">

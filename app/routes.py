@@ -1,5 +1,5 @@
 from app import app
-from flask import render_template, request, redirect, url_for, flash
+from flask import render_template, request, redirect, url_for, flash, jsonify
 from app.utils import get_element, selectors
 from .models import Product, Opinion
 from . import db
@@ -43,9 +43,9 @@ def extract():
                     for key, value in selectors.items():
                         single_opinion[key] = get_element(opinion, *value)
                     all_opinions.append(single_opinion)
-                    # new_opinion = Opinion(opinion_id=single_opinion["opinion_id"], author=single_opinion["author"], recommendation=single_opinion["recommendation"], score=single_opinion["score"], purchased=single_opinion["purchased"], published_at=single_opinion["published_at"], purchased_at=single_opinion["purchased_at"], thumbs_up=single_opinion["thumbs_up"], thumbs_down=single_opinion["thumbs_down"], content=single_opinion["content"], pros=single_opinion["pros"], cons=single_opinion["cons"])
-                    # db.session.add(new_opinion)
-                    # db.session.commit()
+                    new_opinion = Opinion(opinion_id=single_opinion["opinion_id"], author=single_opinion["author"], recommendation=single_opinion["recommendation"], score=single_opinion["score"], purchased=single_opinion["purchased"], published_at=single_opinion["published_at"], purchased_at=single_opinion["purchased_at"], thumbs_up=single_opinion["thumbs_up"], thumbs_down=single_opinion["thumbs_down"], content=single_opinion["content"], pros=','.join(single_opinion["pros"]), cons=','.join(single_opinion["cons"]), product_code=product_code)
+                    db.session.add(new_opinion)
+                    db.session.commit()
                 try:
                     url = f"https://www.ceneo.pl" + get_element(page, "a.pagination__next", "href")
                 except TypeError: 
@@ -114,7 +114,7 @@ def extract():
             with open(f"./app/static/stats/{product_code}.json", 'w', encoding = "UTF-8") as jsf:
                 simplejson.dump(stats, jsf, indent=4, ensure_ascii=False, ignore_nan=True)
 
-            new_product = Product(product_code=product_code, pros=stats["pros_count"], cons=stats["cons_count"], mean_score=stats["avg_score"])
+            new_product = Product(product_code=product_code, opinions_num=stats["opinions_count"], pros=stats["pros_count"], cons=stats["cons_count"], mean_score=stats["avg_score"])
             db.session.add(new_product)
             db.session.commit()
 
@@ -124,15 +124,13 @@ def extract():
 @app.route('/products', methods=['GET', 'POST'])
 def products():
     products = Product.query.order_by(Product.date_created).all()
-    print(products)
-    product_code = products[0]
     files = os.listdir('app/static/stats')
     product_opinion_list = []
     for f in files:
         with open(f"app/static/stats/{f}", 'r', encoding='utf-8') as jsf:
             js = json.load(jsf)
         product_opinion_list.append((f.split('.')[0],js))
-    return render_template("products.html", p_o_list = product_opinion_list)
+    return render_template("products.html",products=products, p_o_list = product_opinion_list)
 
 @app.route('/author')
 def author():
@@ -140,9 +138,7 @@ def author():
 
 @app.route('/product/<product_code>', methods=['GET', 'POST'])
 def product(product_code):
+    product = Product.query.filter_by(product_code=product_code).first()
     with open(f"app/static/opinions/{product_code}.json", 'r', encoding='utf-8') as jsf:
         js = json.load(jsf)
-    
-    # pobranie z plikow json opini o produkcie i statystyki do dataframe albo listy slownikow
-    # przekazanie opinii i statystyk do szablonu html
-    return render_template("product.html", product_code=str(product_code), opinions_list=js)
+    return render_template("product.html", product_code=product_code, product=product, opinions_list=js)

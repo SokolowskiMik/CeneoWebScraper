@@ -3,7 +3,6 @@
 {% block content %}
 <div class="col pt-2">
   <h2>Lista produktow</h2>
-  {{products}}
   <ul class="list-group list-group-horizontal-lg">
     <li class="list-group-item flex-fill d-flex">id opinii</li>
     <li class="list-group-item flex-fill d-flex">Liczba opinii</li>
@@ -12,7 +11,8 @@
     <li class="list-group-item flex-fill d-flex">Średnia ocen</li>
     <li class="list-group-item flex-fill d-flex">Pobierz csv, xlsx lub json</li>
   </ul>
-  {% for product_code, list in p_o_list %}
+  
+  <!-- {% for product_code, list in p_o_list %}
   <ul class="list-group list-group-horizontal-lg">
     <li class="list-group-item flex-fill">
       <a class="link-secondary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" href="/product/{{product_code}}">{{product_code}}</a>
@@ -55,6 +55,97 @@
     </div>
     </li>
   </ul>
-  {% endfor %}
+  {% endfor %} -->
+<!-- 
+  {% for product in products %}
+  <ul class="list-group list-group-horizontal-lg">
+    <li class="list-group-item flex-fill">
+      <a class="link-secondary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" href="/product/{{product.product_code}}">{{product.product_code}}</a>
+    </li>
+    <li class="list-group-item flex-fill">
+      <span class="badge bg-primary rounded-pill">{{product.opinions_num}}</span>
+    </li>
+    <li class="list-group-item flex-fill">
+      <span class="badge bg-primary rounded-pill">{{product.cons}}</span>
+    </li>
+    <li class="list-group-item flex-fill">
+      <span class="badge bg-primary rounded-pill">{{product.pros}}</span>
+    </li>
+    <li class="list-group-item flex-fill">
+      <span class="badge bg-primary rounded-pill">{{product.mean_score}}</span>
+    </li>
+    <li class="list-group-item flex-fill">
+      <div class="btn-group">
+        <a href="{{url_for('static', filename='./opinions/'+product.product_code+'.csv')}}" download="{{product.product_code.csv}}" class="text-decoration-none"><button type="button" class="btn btn-outline-secondary">csv
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
+<path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+<path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
+</svg>
+          <span class="visually-hidden">csv</span>
+        </button></a>
+        <a href="{{url_for('static', filename='./opinions/'+product.product_code+'.xlsx')}}" download="{{product.product_code.xlsx}}" class="text-decoration-none"><button type="button" class="btn btn-outline-secondary">xlsx
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
+<path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+<path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
+</svg>
+          <span class="visually-hidden">xlsx</span>
+        </button></a>
+        <a href="{{url_for('static', filename='./opinions/'+product.product_code+'.json')}}" download="{{product.product_code.json}}"  class="text-decoration-none"><button type="button" class="btn btn-outline-secondary">json
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
+<path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+<path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
+</svg>
+          <span class="visually-hidden">json</span>
+        </button></a>
+    </div>
+    </li>
+  </ul>
+  {% endfor %} -->
+  <table class="table table-striped table-active">
+    <thead>
+      <tr>
+        <th scope="col">id opinii</th>
+        <th scope="col">Liczba opinii</th>
+        <th scope="col">Liczba wad</th>
+        <th scope="col">Liczba zalet</th>
+        <th scope="col">Średnia ocen</th>
+        <th scope="col">Pobierz csv, xlsx lub json</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for product in products %}
+      <tr>
+        <th scope="row"><a class="link-secondary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" href="/product/{{product.product_code}}">{{product.product_code}}</a></th>
+        <td><span class="badge bg-primary rounded-pill">{{product.opinions_num}}</span></td>
+        <td><span class="badge bg-primary rounded-pill">{{product.cons}}</span></td>
+        <td><span class="badge bg-primary rounded-pill">{{product.pros}}</span></td>
+        <td><span class="badge bg-primary rounded-pill">{{product.mean_score}}</span></td>
+        <td><div class="btn-group">
+          <a href="{{url_for('static', filename='./opinions/'+product.product_code+'.csv')}}" download="{{product.product_code.csv}}" class="text-decoration-none"><button type="button" class="btn btn-outline-secondary">csv
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
+  <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+  <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
+  </svg>
+            <span class="visually-hidden">csv</span>
+          </button></a>
+          <a href="{{url_for('static', filename='./opinions/'+product.product_code+'.xlsx')}}" download="{{product.product_code.xlsx}}" class="text-decoration-none"><button type="button" class="btn btn-outline-secondary">xlsx
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
+  <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+  <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
+  </svg>
+            <span class="visually-hidden">xlsx</span>
+          </button></a>
+          <a href="{{url_for('static', filename='./opinions/'+product.product_code+'.json')}}" download="{{product.product_code.json}}"  class="text-decoration-none"><button type="button" class="btn btn-outline-secondary">json
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
+  <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+  <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
+  </svg>
+            <span class="visually-hidden">json</span>
+          </button></a>
+      </div></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
 </div>
 {% endblock %}

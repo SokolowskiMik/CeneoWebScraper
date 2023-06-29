@@ -81,7 +81,7 @@
           </tr>
       </thead>
       <tbody>
-        {% for opinion in opinions_list %}
+        <!-- {% for opinion in opinions_list %}
         <tr>
               <td>{{opinion["opinion_id"]}}</td>
               <td>{{opinion["author"]}}</td>
@@ -95,6 +95,22 @@
               <td>{{opinion["content"]}}</td>
               <td>{{opinion["pros"]}}</td>
               <td>{{opinion["cons"]}}</td>
+          </tr>
+        {% endfor %} -->
+        {% for opinion in product.opinions %}
+        <tr>
+              <td>{{opinion.opinion_id}}</td>
+              <td>{{opinion.author}}</td>
+              <td>{{opinion.recommendation}}</td>
+              <td>{{opinion.score}}</td>
+              <td>{{opinion.purchased}}</td>
+              <td>{{opinion.published_at}}</td>
+              <td>{{opinion.purchased_at}}</td>
+              <td>{{opinion.thumbs_up}}</td>
+              <td>{{opinion.thumbs_down}}</td>
+              <td>{{opinion.content}}</td>
+              <td>{{opinion.pros}}</td>
+              <td>{{opinion.cons}}</td>
           </tr>
         {% endfor %}
         </tbody>
