@@ -3,6 +3,7 @@ from flask import render_template, request, redirect, url_for, flash, jsonify
 from app.utils import get_element, selectors
 from .models import Product, Opinion
 from . import db
+from .forms import SubmitForm
 import requests
 import time
 import json
@@ -14,6 +15,8 @@ from matplotlib import pyplot as plt
 from bs4 import BeautifulSoup
 
 
+#example of product codes 150872408,137671791,39562616
+
 @app.route('/')
 @app.route('/index')
 def index():
@@ -21,36 +24,45 @@ def index():
 
 @app.route('/extract', methods=['GET', 'POST'])
 def extract():
+    form = SubmitForm()
     #dodac obsluge bledow typu niepoprawny kod produktu i litery znaki specjalne
     if request.method == 'POST':
+        # product_code  = request.form['product_id']
+        product_code = form.product_id.data
         #wtforms biblioteka do obiektowej walidacji itp
-        product_code  = request.form['product_id']
-        if len(product_code) < 4 or not product_code.isdigit():
-            flash('Błędne id produktu', category='error')
-            time.sleep(2)
-            return redirect(url_for("extract"))
-        else:
+        # if not form.validate_on_submit() or not product_code.isdigit():
+        #     flash('Błędne id produktu', category='error')
+        #     time.sleep(2)
+        #     return redirect(url_for("extract", form=form, product_code=product_code))
+        if form.validate_on_submit():
             
 
             all_opinions = []
             url = f"https://www.ceneo.pl/{product_code}#tab=reviews"
-            while(url):
-                response =  requests.get(url)
-                page = BeautifulSoup(response.text, 'html.parser')
-                opinions = page.select("div.js_product-review")
-                for opinion in opinions:
-                    single_opinion = {}
-                    for key, value in selectors.items():
-                        single_opinion[key] = get_element(opinion, *value)
-                    all_opinions.append(single_opinion)
-                    new_opinion = Opinion(opinion_id=single_opinion["opinion_id"], author=single_opinion["author"], recommendation=single_opinion["recommendation"], score=single_opinion["score"], purchased=single_opinion["purchased"], published_at=single_opinion["published_at"], purchased_at=single_opinion["purchased_at"], thumbs_up=single_opinion["thumbs_up"], thumbs_down=single_opinion["thumbs_down"], content=single_opinion["content"], pros=','.join(single_opinion["pros"]), cons=','.join(single_opinion["cons"]), product_code=product_code)
-                    db.session.add(new_opinion)
-                    db.session.commit()
-                try:
-                    url = f"https://www.ceneo.pl" + get_element(page, "a.pagination__next", "href")
-                except TypeError: 
-                    url =  None
-            print(all_opinions)
+            #test url
+            test = requests.get(url)
+            if test.status_code == 200:
+                while(url):
+                    response =  requests.get(url)
+                    page = BeautifulSoup(response.text, 'html.parser')
+                    opinions = page.select("div.js_product-review")
+                    for opinion in opinions:
+                        single_opinion = {}
+                        for key, value in selectors.items():
+                            single_opinion[key] = get_element(opinion, *value)
+                        all_opinions.append(single_opinion)
+                        new_opinion = Opinion(opinion_id=single_opinion["opinion_id"], author=single_opinion["author"], recommendation=single_opinion["recommendation"], score=single_opinion["score"], purchased=single_opinion["purchased"], published_at=single_opinion["published_at"], purchased_at=single_opinion["purchased_at"], thumbs_up=single_opinion["thumbs_up"], thumbs_down=single_opinion["thumbs_down"], content=single_opinion["content"], pros=','.join(single_opinion["pros"]), cons=','.join(single_opinion["cons"]), product_code=product_code)
+                        db.session.add(new_opinion)
+                        db.session.commit()
+                    try:
+                        url = f"https://www.ceneo.pl" + get_element(page, "a.pagination__next", "href")
+                    except TypeError: 
+                        url =  None
+            else:
+                flash('Błędne id produktu', category='error')
+                time.sleep(2)
+                return redirect(url_for("extract", form=form, product_code=product_code))
+
             #json
             try:
                 os.mkdir("./app/static/opinions")
@@ -118,8 +130,13 @@ def extract():
             db.session.add(new_product)
             db.session.commit()
 
-            return redirect(url_for('product', product_code=product_code))
-    return render_template("extract.html")
+            return redirect(url_for('product', product_code=product_code, ))
+        
+        elif not form.validate_on_submit() or not product_code.isdigit():
+            flash('Błędne id produktu', category='error')
+            time.sleep(2)
+            return redirect(url_for("extract", form=form, product_code=product_code))
+    return render_template("extract.html", form=form)
 
 @app.route('/products', methods=['GET', 'POST'])
 def products():

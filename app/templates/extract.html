@@ -3,11 +3,15 @@
 {% block content %}
 <div class="col-4 pt-2">
     <form id="submitForm" method="POST" action="{{url_for('extract')}}">
-        <label for="product-id" class="form-label"> Wpisz id produktu </label>
+        <!-- <label for="product-id" class="form-label"> Wpisz id produktu </label> -->
+        {{ form.product_id.label}}
         <div class="input-group mb-3">
-            <input type="text" class="form-control" id="product_id" name="product_id" placeholder="type in product id" aria-describedby="submit-button">
+            {{ form.csrf_token }}
+            {{ form.product_id(class="form-control", placeholder="type in product id") }} 
+            <!-- <input type="text" class="form-control" id="product_id" name="product_id" placeholder="type in product id" aria-describedby="submit-button"> -->
             <input class="btn btn-outline-secondary" id="submit-button" type="submit" value="Pobierz">
         </div>
     </form>
+    {{ product_code }}
 </div>
 {% endblock %}

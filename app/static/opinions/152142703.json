@@ -1,0 +1,146 @@
+[
+    {
+        "opinion_id": "17641893",
+        "author": "n...4",
+        "recommendation": "Polecam",
+        "score": "4,5/5",
+        "purchased": "Transakcja pochodzi z Marketplace Ceneo (usługi Kup Teraz).",
+        "published_at": "2023-06-23 14:34:18",
+        "purchased_at": "2023-06-12 23:00:47",
+        "thumbs_up": "0",
+        "thumbs_down": "0",
+        "content": "Telefon wygląda super jak jest w opisie",
+        "pros": [],
+        "cons": []
+    },
+    {
+        "opinion_id": "17629130",
+        "author": "s...w",
+        "recommendation": "Polecam",
+        "score": "4,5/5",
+        "purchased": "Transakcja pochodzi z Marketplace Ceneo (usługi Kup Teraz).",
+        "published_at": "2023-06-20 13:44:06",
+        "purchased_at": "2023-06-07 16:00:28",
+        "thumbs_up": "0",
+        "thumbs_down": "0",
+        "content": "Za krótki czas mam w posiadaniu.",
+        "pros": [
+            "łatwość obsługi",
+            "wygląd"
+        ],
+        "cons": []
+    },
+    {
+        "opinion_id": "17661510",
+        "author": "m...5",
+        "recommendation": "Polecam",
+        "score": "4,5/5",
+        "purchased": "Transakcja pochodzi z Marketplace Ceneo (usługi Kup Teraz).",
+        "published_at": "2023-06-29 20:54:15",
+        "purchased_at": "2023-06-28 10:20:38",
+        "thumbs_up": "0",
+        "thumbs_down": "0",
+        "content": "Xiaomi jak zawsze super produkt",
+        "pros": [],
+        "cons": []
+    },
+    {
+        "opinion_id": "17604023",
+        "author": "l...6",
+        "recommendation": "Polecam",
+        "score": "4,5/5",
+        "purchased": "Transakcja pochodzi z Marketplace Ceneo (usługi Kup Teraz).",
+        "published_at": "2023-06-12 22:39:57",
+        "purchased_at": "2023-05-26 11:00:37",
+        "thumbs_up": "0",
+        "thumbs_down": "0",
+        "content": "Polecam.",
+        "pros": [
+            "czas pracy na baterii",
+            "funkcjonalność",
+            "łatwość obsługi",
+            "wygląd"
+        ],
+        "cons": []
+    },
+    {
+        "opinion_id": "17634371",
+        "author": "i...e",
+        "recommendation": "Polecam",
+        "score": "5/5",
+        "purchased": "Transakcja pochodzi z Marketplace Ceneo (usługi Kup Teraz).",
+        "published_at": "2023-06-21 19:09:20",
+        "purchased_at": "2023-05-28 13:31:55",
+        "thumbs_up": "0",
+        "thumbs_down": "0",
+        "content": "Telefon bardzo fajny, robi bardzo ładne zdjęcia (robiłem tylko widoczki), chociaż nie mam porównania z droższymi modelami.",
+        "pros": [
+            "czas pracy na baterii",
+            "funkcjonalność",
+            "łatwość obsługi",
+            "wygląd"
+        ],
+        "cons": []
+    },
+    {
+        "opinion_id": "17563208",
+        "author": "m...k",
+        "recommendation": "Polecam",
+        "score": "5/5",
+        "purchased": "Transakcja pochodzi z Marketplace Ceneo (usługi Kup Teraz).",
+        "published_at": "2023-05-30 20:20:36",
+        "purchased_at": "2023-05-12 17:54:06",
+        "thumbs_up": "0",
+        "thumbs_down": "0",
+        "content": "dobry aparat",
+        "pros": [
+            "czas pracy na baterii",
+            "funkcjonalność",
+            "łatwość obsługi",
+            "wygląd"
+        ],
+        "cons": []
+    },
+    {
+        "opinion_id": "17636277",
+        "author": "d...a",
+        "recommendation": "Polecam",
+        "score": "5/5",
+        "purchased": "Transakcja pochodzi z Marketplace Ceneo (usługi Kup Teraz).",
+        "published_at": "2023-06-22 08:15:49",
+        "purchased_at": "2023-06-13 20:04:55",
+        "thumbs_up": "0",
+        "thumbs_down": "1",
+        "content": "Córka zadowolona",
+        "pros": [],
+        "cons": []
+    },
+    {
+        "opinion_id": "17631154",
+        "author": "r...l",
+        "recommendation": "Polecam",
+        "score": "5/5",
+        "purchased": "Transakcja pochodzi z Marketplace Ceneo (usługi Kup Teraz).",
+        "published_at": "2023-06-20 23:05:01",
+        "purchased_at": "2023-06-11 16:04:18",
+        "thumbs_up": "0",
+        "thumbs_down": "0",
+        "content": "Ok",
+        "pros": [],
+        "cons": []
+    },
+    {
+        "opinion_id": "17560178",
+        "author": "Dariusz",
+        "recommendation": "Polecam",
+        "score": "5/5",
+        "purchased": "Transakcja pochodzi z Marketplace Ceneo (usługi Kup Teraz).",
+        "published_at": "2023-05-29 22:43:17",
+        "purchased_at": "2023-05-15 13:51:54",
+        "thumbs_up": "0",
+        "thumbs_down": "0",
+        "content": "OK",
+        "pros": [],
+        "cons": []
+    }
+]
