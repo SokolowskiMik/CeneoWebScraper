@@ -12,10 +12,12 @@ import os
 import pandas as pd
 import numpy as np
 from matplotlib import pyplot as plt
+import matplotlib
+matplotlib.use("Agg")
 from bs4 import BeautifulSoup
 
 
-#example of product codes 150872408,137671791,39562616
+#example of product codes 150872408,137671791,39562616,152142703
 
 @app.route('/')
 @app.route('/index')
@@ -25,18 +27,15 @@ def index():
 @app.route('/extract', methods=['GET', 'POST'])
 def extract():
     form = SubmitForm()
-    #dodac obsluge bledow typu niepoprawny kod produktu i litery znaki specjalne
+
     if request.method == 'POST':
         # product_code  = request.form['product_id']
         product_code = form.product_id.data
-        #wtforms biblioteka do obiektowej walidacji itp
         # if not form.validate_on_submit() or not product_code.isdigit():
         #     flash('Błędne id produktu', category='error')
         #     time.sleep(2)
         #     return redirect(url_for("extract", form=form, product_code=product_code))
         if form.validate_on_submit():
-            
-
             all_opinions = []
             url = f"https://www.ceneo.pl/{product_code}#tab=reviews"
             #test url
