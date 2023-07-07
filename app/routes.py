@@ -55,7 +55,7 @@ def extract():
                     return redirect(url_for("extract", form=form, product_code=product_code))
             else:
                 flash('Błędne id produktu', category='error')
-                time.sleep(1)
+                time.sleep(0.5)
                 return redirect(url_for("extract", form=form, product_code=product_code))
 
             #json
@@ -129,12 +129,9 @@ def extract():
         
         else:
             flash('Błędne id produktu', category='error')
-            time.sleep(2)
+            time.sleep(0.5)
             return redirect(url_for("extract", form=form, product_code=product_code))
-        # elif not form.validate_on_submit() or not product_code.isdigit():
-        #     flash('Błędne id produktu', category='error')
-        #     time.sleep(2)
-        #     return redirect(url_for("extract", form=form, product_code=product_code))
+        
     return render_template("extract.html", form=form)
 
 @app.route('/products', methods=['GET', 'POST'])
