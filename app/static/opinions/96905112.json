@@ -1,0 +1,30 @@
+[
+    {
+        "opinion_id": "17398055",
+        "author": "t...2",
+        "recommendation": "Polecam",
+        "score": "5/5",
+        "purchased": "Transakcja pochodzi z Marketplace Ceneo (usługi Kup Teraz).",
+        "published_at": "2023-04-13 19:08:18",
+        "purchased_at": "2023-03-14 13:00:07",
+        "thumbs_up": "0",
+        "thumbs_down": "0",
+        "content": "Aparat na prezent",
+        "pros": [],
+        "cons": []
+    },
+    {
+        "opinion_id": "15460718",
+        "author": "Użytkownik Ceneo",
+        "recommendation": null,
+        "score": "4,5/5",
+        "purchased": null,
+        "published_at": "2019-11-23 00:00:00",
+        "purchased_at": null,
+        "thumbs_up": "0",
+        "thumbs_down": "0",
+        "content": "4,5/5",
+        "pros": [],
+        "cons": []
+    }
+]

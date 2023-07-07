@@ -29,18 +29,11 @@ def extract():
     form = SubmitForm()
 
     if request.method == 'POST':
-        # product_code  = request.form['product_id']
         product_code = form.product_id.data
-        # if not form.validate_on_submit() or not product_code.isdigit():
-        #     flash('Błędne id produktu', category='error')
-        #     time.sleep(2)
-        #     return redirect(url_for("extract", form=form, product_code=product_code))
         if form.validate_on_submit():
             all_opinions = []
             url = f"https://www.ceneo.pl/{product_code}#tab=reviews"
-            #test url
-            test = requests.get(url)
-            if test.status_code == 200:
+            if form.validate_url(url):
                 while(url):
                     response =  requests.get(url)
                     page = BeautifulSoup(response.text, 'html.parser')
@@ -57,9 +50,12 @@ def extract():
                         url = f"https://www.ceneo.pl" + get_element(page, "a.pagination__next", "href")
                     except TypeError: 
                         url =  None
+                if len(all_opinions) == 0:
+                    flash('Brak opinii o produkcie', category='error')
+                    return redirect(url_for("extract", form=form, product_code=product_code))
             else:
                 flash('Błędne id produktu', category='error')
-                time.sleep(2)
+                time.sleep(1)
                 return redirect(url_for("extract", form=form, product_code=product_code))
 
             #json
@@ -131,10 +127,14 @@ def extract():
 
             return redirect(url_for('product', product_code=product_code, ))
         
-        elif not form.validate_on_submit() or not product_code.isdigit():
+        else:
             flash('Błędne id produktu', category='error')
             time.sleep(2)
             return redirect(url_for("extract", form=form, product_code=product_code))
+        # elif not form.validate_on_submit() or not product_code.isdigit():
+        #     flash('Błędne id produktu', category='error')
+        #     time.sleep(2)
+        #     return redirect(url_for("extract", form=form, product_code=product_code))
     return render_template("extract.html", form=form)
 
 @app.route('/products', methods=['GET', 'POST'])
