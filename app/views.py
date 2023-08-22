@@ -1,7 +1,8 @@
 from app import app
-from flask import render_template, request, redirect, url_for, flash, jsonify
+from flask import Blueprint, render_template, request, redirect, url_for, flash, jsonify
+from flask_login import login_required, current_user
 from app.utils import get_element, selectors
-from .models import Product, Opinion
+from .models import Product, Opinion, Note
 from . import db
 from .forms import SubmitForm
 import requests
@@ -16,15 +17,16 @@ import matplotlib
 matplotlib.use("Agg")
 from bs4 import BeautifulSoup
 
+views = Blueprint('views', __name__)
 
 #example of product codes 150872408,137671791,39562616,152142703
 
-@app.route('/')
-@app.route('/index')
+@views.route('/')
+@views.route('/index')
 def index():
-    return render_template("index.html")
+    return render_template("index.html", user=current_user)
 
-@app.route('/extract', methods=['GET', 'POST'])
+@views.route('/extract', methods=['GET', 'POST'])
 def extract():
     form = SubmitForm()
 
@@ -52,11 +54,11 @@ def extract():
                         url =  None
                 if len(all_opinions) == 0:
                     flash('Brak opinii o produkcie', category='error')
-                    return redirect(url_for("extract", form=form, product_code=product_code))
+                    return redirect(url_for("views.extract", form=form, product_code=product_code), user=current_user)
             else:
                 flash('Błędne id produktu', category='error')
                 time.sleep(0.5)
-                return redirect(url_for("extract", form=form, product_code=product_code))
+                return redirect(url_for("views.extract", form=form, product_code=product_code), user=current_user)
 
             #json
             try:
@@ -125,16 +127,16 @@ def extract():
             db.session.add(new_product)
             db.session.commit()
 
-            return redirect(url_for('product', product_code=product_code, ))
+            return redirect(url_for('views.product', product_code=product_code, user=current_user ))
         
         else:
             flash('Błędne id produktu', category='error')
             time.sleep(0.5)
-            return redirect(url_for("extract", form=form, product_code=product_code))
+            return redirect(url_for("views.extract", form=form, product_code=product_code, user=current_user))
         
-    return render_template("extract.html", form=form)
+    return render_template("extract.html", form=form, user=current_user)
 
-@app.route('/products', methods=['GET', 'POST'])
+@views.route('/products', methods=['GET', 'POST'])
 def products():
     products = Product.query.order_by(Product.date_created).all()
     files = os.listdir('app/static/stats')
@@ -143,41 +145,45 @@ def products():
         with open(f"app/static/stats/{f}", 'r', encoding='utf-8') as jsf:
             js = json.load(jsf)
         product_opinion_list.append((f.split('.')[0],js))
-    return render_template("products.html",products=products, p_o_list = product_opinion_list)
+    return render_template("products.html",products=products, p_o_list = product_opinion_list, user=current_user)
 
-@app.route('/author')
+@views.route('/author')
 def author():
-    return render_template("author.html")
+    return render_template("author.html", user=current_user)
 
-@app.route('/product/<product_code>', methods=['GET', 'POST'])
+@views.route('/product/<product_code>', methods=['GET', 'POST'])
 def product(product_code):
     product = Product.query.filter_by(product_code=product_code).first()
     with open(f"app/static/opinions/{product_code}.json", 'r', encoding='utf-8') as jsf:
         js = json.load(jsf)
-    return render_template("product.html", product_code=product_code, product=product, opinions_list=js)
+    return render_template("product.html", product_code=product_code, product=product, opinions_list=js, user=current_user)
 
 
-@app.route('/sign-up', methods=['GET', 'POST'])
-def sign_up():
+@views.route('/notes', methods=['GET', 'POST'])
+@login_required
+def notes():
     if request.method == 'POST':
-        email = request.form.get('email')
-        firstName = request.form.get('firstName')
-        password1 = request.form.get('password1')
-        password2 = request.form.get('password2')
+        note = request.form.get('note')
 
-        if len(email) < 4:
-            flash('Email must be greater than 3 characters.', category='error')
-        elif len(firstName) < 2:
-            flash('First name must be greater than 1 character.', category='error')
-        elif len(password1) < 7:
-            flash('password must be at least 7 characters.', category='error')
-        elif password1 != password2:
-            flash("Passwords don't match.", category='error')
+        if len(note) < 1:
+            flash('Note is too short!', category='error')
         else:
-            flash('Account created!', category='success')
+            new_note = Note(data=note, user_id=current_user.id)
+            db.session.add(new_note)
+            db.session.commit()
+            flash('Note added!', category='success')
+            
+    return render_template("home.html", user=current_user)
 
-    return render_template("sign_up.html")
+@views.route('/delete-note', methods=['POST'])
+def delete_note():
+    note = json.loads(request.data)
+    noteId = note['noteId']
+    note = Note.query.get(noteId)
+    if note:
+        if note.user_id == current_user.id:
+            db.session.delete(note)
+            db.session.commit()
 
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    return render_template("login.html")
+    return jsonify({})
+

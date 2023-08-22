@@ -2,7 +2,7 @@
 
 {% block content %}
 <div class="col-4 pt-2">
-    <form id="submitForm" method="POST" action="{{url_for('extract')}}">
+    <form id="submitForm" method="POST" action="{{url_for('views.extract')}}">
         <!-- <label for="product-id" class="form-label"> Wpisz id produktu </label> -->
         {{ form.product_id.label}}
         <div class="input-group mb-3">
