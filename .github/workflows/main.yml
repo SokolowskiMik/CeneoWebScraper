@@ -24,8 +24,8 @@ jobs:
           mkdir target
           cp -r app requirements.txt run.py target/
           tar -czvf flask_app.tar.gz -C target .
-      - name: Upload the artifact
-        uses: actions/upload-artifact@v4
+      - uses: ncipollo/release-action@v1
         with:
-          name: flask_app-3.11-${{ github.run_id }}
-          path: flask_app.tar.gz
+          artifacts: "target/flask_app.tar.gz"
+          body: "My release flask_app-3.11-${{ github.run_id }}"
+          name: "Release candidate flask_app-3.11-${{ github.run_id }}"
