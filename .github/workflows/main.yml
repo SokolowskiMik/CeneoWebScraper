@@ -8,23 +8,27 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+    strategy:
+      matrix:
+        python-version: ["3.9", "3.10", "3.11", "3.12"]
 
     steps:
       - uses: actions/checkout@v4
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: ${{ matrix.python-version }}
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-      - run: ls -la target/
-      - run: mv target/*.jar target/app.jar
-      - uses: ncipollo/release-action@v1
+      - name: Package the app
+        run: |
+          mkdir target
+          cp -r app requirements.txt run.py target/
+          tar -czvf flask_app.tar.gz -C target .
+      - name: Upload the artifact
+        uses: actions/upload-artifact@v4
         with:
-          artifacts: "target/app.jar"
-          body: "My release ${{ github.ref }}"
-          name: "Release candidate ${{ github.ref }}"
-      - name: check
-        run: echo " all good"
+          name: flask_app
+          path: flask_app.tar.gz
