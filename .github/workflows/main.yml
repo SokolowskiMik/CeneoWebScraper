@@ -14,11 +14,17 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.12'
+          python-version: '3.11'
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install setuptools
           pip install -r requirements.txt
+      - run: ls -la target/
+      - run: mv target/*.jar target/app.jar
+      - uses: ncipollo/release-action@v1
+        with:
+          artifacts: "target/app.jar"
+          body: "My release ${{ github.ref }}"
+          name: "Release candidate ${{ github.ref }}"
       - name: check
         run: echo " all good"
