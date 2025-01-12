@@ -33,3 +33,4 @@ tzdata==2023.3
 urllib3==1.26.15
 Werkzeug==2.3.4
 gunicorn==23.0.0
+packaging==24.2
