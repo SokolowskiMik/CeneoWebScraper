@@ -29,3 +29,4 @@ jobs:
           artifacts: "target/flask_app.tar.gz"
           body: "My release flask_app-3.11-${{ github.run_id }}"
           name: "Release candidate flask_app-3.11-${{ github.run_id }}"
+          tag: "v3.11-${{ github.run_id }}"
