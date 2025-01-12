@@ -25,7 +25,7 @@ jobs:
           cp -r app requirements.txt run.py target/
       - uses: ncipollo/release-action@v1
         with:
-          artifacts: "target/CENEOWEBSCRAPER"
+          artifacts: "target/CeneoWebScraper"
           body: "My release flask_app-3.11-${{ github.run_id }}"
           name: "Release candidate flask_app-3.11-${{ github.run_id }}"
           tag: "v3.11-${{ github.run_id }}"
