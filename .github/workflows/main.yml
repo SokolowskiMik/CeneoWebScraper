@@ -27,5 +27,5 @@ jobs:
       - name: Upload the artifact
         uses: actions/upload-artifact@v4
         with:
-          name: flask_app-${{ matrix.python-version }}
+          name: flask_app-3.11-${{ github.run_id }}
           path: flask_app.tar.gz
