@@ -23,10 +23,9 @@ jobs:
         run: |
           mkdir target
           cp -r app requirements.txt run.py target/
-          tar -czvf flask_app.tar.gz -C target .
       - uses: ncipollo/release-action@v1
         with:
-          artifacts: "target/flask_app.tar.gz"
+          artifacts: "target/CENEOWEBSCRAPER"
           body: "My release flask_app-3.11-${{ github.run_id }}"
           name: "Release candidate flask_app-3.11-${{ github.run_id }}"
           tag: "v3.11-${{ github.run_id }}"
